@@ -5,11 +5,53 @@ import image2 from "./image2.jpg";
 import image3 from "./image3.jpg";
 import Card from "./Card";
 
+
+  // const cardIndexHelper = (cardIdx, total) => {
+  //   if (cardIdx !== total) {
+  //     // setCardIdx(cardIdx + 1);
+  //     return cardIdx + 1
+  //   } else {
+  //     // setCardIdx(0);
+  //     return 0
+  //   }
+  // };
+
 function Carousel(props) {
+
+
+  const cardIndexHelper = () => {
+    if (cardIdx !== total) {
+      // setCardIdx(cardIdx + 1);
+      return cardIdx + 1;
+    } else {
+      // setCardIdx(0);
+      return 0;
+    }
+  };
+
   const [cardIdx, setCardIdx] = useState(0);
-  const card = props.cardData[cardIdx];
-  const total = props.cardData.length;
-  const goForward = () => setCardIdx(cardIdx + 1);
+
+  // let goForward = () => setCardIdx(cardIdx < total ? cardIdx + 1: 0);
+
+  // let goForward = () => setCardIdx(cardIndexHelper(cardIdx, total))
+  // const cardIndexHelper = () => {
+  //   if (cardIdx < total) {
+  //     setCardIdx(cardIdx + 1);
+  //   } else {
+  //     setCardIdx(0)
+  //   }
+  // }
+
+    let goForward = cardIndexHelper();
+
+
+      const card = props.cardData[cardIdx];
+      const total = props.cardData.length;
+
+
+
+      console.log(cardIdx);
+      console.log(`total`, total);
 
   return (
     <div className="Carousel">

@@ -1,30 +1,67 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import {
+  render,
+  fireEvent
+} from "@testing-library/react";
 import Carousel from "./Carousel";
 
-it("works when you click on the right arrow", function() {
+it("works when you click on the right arrow", function () {
   const { queryByTestId, queryByAltText } = render(<Carousel />);
 
   // expect the first image to show, but not the second
-  expect(queryByAltText("Photo by Richard Pasquarella on Unsplash")).toBeInTheDocument();
-  expect(queryByAltText("Photo by Pratik Patel on Unsplash")).not.toBeInTheDocument();
+  expect(
+    queryByAltText("Photo by Richard Pasquarella on Unsplash")
+  ).toBeInTheDocument();
+  expect(
+    queryByAltText("Photo by Pratik Patel on Unsplash")
+  ).not.toBeInTheDocument();
 
   // move forward in the carousel
-  const rightArrow = queryByTestId("right-arrow");
+  let rightArrow = queryByTestId("right-arrow");
   fireEvent.click(rightArrow);
 
   // expect the second image to show, but not the first
-  expect(queryByAltText("Photo by Richard Pasquarella on Unsplash")).not.toBeInTheDocument();
-  expect(queryByAltText("Photo by Pratik Patel on Unsplash")).toBeInTheDocument();
+  expect(
+    queryByAltText("Photo by Richard Pasquarella on Unsplash")
+  ).not.toBeInTheDocument();
+  expect(
+    queryByAltText("Photo by Pratik Patel on Unsplash")
+  ).toBeInTheDocument();
+
+  // move forward in the carousel (second to third)
+  fireEvent.click(rightArrow);
+
+  // expect the third image to show, but not the second
+  expect(
+    queryByAltText("Photo by Pratik Patel on Unsplash")
+  ).not.toBeInTheDocument();
+  expect(queryByAltText("Photo by Josh Post on Unsplash")).toBeInTheDocument();
+
+  // move forward in the carousel (third to first)
+  fireEvent.click(rightArrow);
+
+  // expect the first image to show, but not the third
+  expect(
+    queryByAltText("Photo by Josh Post on Unsplash")
+  ).not.toBeInTheDocument();
+  expect(
+    queryByAltText("Photo by Richard Pasquarella on Unsplash")
+  ).toBeInTheDocument();
 });
+
+
+
+
 
 // snoke test
 it("renders without crashing", () => {
-  render(<Carousel />)
-})
+  render( < Carousel / > );
+});
 
 // snapshot test
 it("matches carousel snapshot", () => {
-    const {asFragment} = render(<Carousel />);
-    expect(asFragment()).toMatchSnapshot();
-})
+  const {
+    asFragment
+  } = render( < Carousel / > );
+  expect(asFragment()).toMatchSnapshot();
+});
