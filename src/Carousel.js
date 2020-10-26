@@ -6,60 +6,22 @@ import image3 from "./image3.jpg";
 import Card from "./Card";
 
 
-  // const cardIndexHelper = (cardIdx, total) => {
-  //   if (cardIdx !== total) {
-  //     // setCardIdx(cardIdx + 1);
-  //     return cardIdx + 1
-  //   } else {
-  //     // setCardIdx(0);
-  //     return 0
-  //   }
-  // };
-
 function Carousel(props) {
-
-
-  const cardIndexHelper = () => {
-    if (cardIdx !== total) {
-      // setCardIdx(cardIdx + 1);
-      return cardIdx + 1;
-    } else {
-      // setCardIdx(0);
-      return 0;
-    }
-  };
-
   const [cardIdx, setCardIdx] = useState(0);
-
-  // let goForward = () => setCardIdx(cardIdx < total ? cardIdx + 1: 0);
-
-  // let goForward = () => setCardIdx(cardIndexHelper(cardIdx, total))
-  // const cardIndexHelper = () => {
-  //   if (cardIdx < total) {
-  //     setCardIdx(cardIdx + 1);
-  //   } else {
-  //     setCardIdx(0)
-  //   }
-  // }
-
-    let goForward = cardIndexHelper();
-
-
-      const card = props.cardData[cardIdx];
-      const total = props.cardData.length;
-
-
-
-      console.log(cardIdx);
-      console.log(`total`, total);
+  const card = props.cardData[cardIdx];
+  const total = props.cardData.length;
+  const goForward = () => setCardIdx(cardIdx + 1);
+  const goBack = () => setCardIdx(cardIdx - 1)
+  const rightArrow = cardIdx === total - 1 ? "hidden" : "";
+  const leftArrow = cardIdx === 0 ? "hidden" : ""
 
   return (
     <div className="Carousel">
       <h1>{props.title}</h1>
       <div className="Carousel-main">
         <i
-          className="fas fa-chevron-circle-left fa-2x"
-          onClick={goForward}
+          className={`fas fa-chevron-circle-left fa-2x ${leftArrow}`}
+          onClick={goBack}
           data-testid="left-arrow"
         />
         <Card
@@ -69,7 +31,7 @@ function Carousel(props) {
           totalNum={total}
         />
         <i
-          className="fas fa-chevron-circle-right fa-2x"
+          className={`fas fa-chevron-circle-right fa-2x ${rightArrow}`}
           onClick={goForward}
           data-testid="right-arrow"
         />
@@ -77,6 +39,7 @@ function Carousel(props) {
     </div>
   );
 }
+
 
 Carousel.defaultProps = {
   cardData: [
