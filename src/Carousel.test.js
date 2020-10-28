@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  render,
-  fireEvent
-} from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import Carousel from "./Carousel";
 
 it("works when you click on the right arrow", function () {
@@ -18,11 +15,6 @@ it("works when you click on the right arrow", function () {
     queryByAltText("Photo by Pratik Patel on Unsplash")
   ).not.toBeInTheDocument();
 
-  // expect right arrow to show, but not the left arrow
-  expect(rightArrow).not.toHaveClass("hidden");
-  expect(leftArrow).toHaveClass("hidden");
-
-
   // move forward in the carousel
   fireEvent.click(rightArrow);
 
@@ -34,11 +26,6 @@ it("works when you click on the right arrow", function () {
     queryByAltText("Photo by Pratik Patel on Unsplash")
   ).toBeInTheDocument();
 
-  // expect right and left arrows to be shown
-    expect(rightArrow).not.toHaveClass("hidden");
-  expect(leftArrow).not.toHaveClass("hidden");
-
-
   // move forward in the carousel (second to third)
   fireEvent.click(rightArrow);
 
@@ -48,15 +35,30 @@ it("works when you click on the right arrow", function () {
   ).not.toBeInTheDocument();
   expect(queryByAltText("Photo by Josh Post on Unsplash")).toBeInTheDocument();
 
-  // expect the right arrow to be hidden and left arror to be shown 
-  expect(rightArrow).toHaveClass("hidden");
-    expect(leftArrow).not.toHaveClass("hidden");
-});
+  // move forward in the carousel (third to first)
+  fireEvent.click(rightArrow);
 
+  // expect the first image to shown after end of array is reached
+  expect(
+    queryByAltText("Photo by Richard Pasquarella on Unsplash")
+  ).toBeInTheDocument();
+  expect(
+    queryByAltText("Photo by Pratik Patel on Unsplash")
+  ).not.toBeInTheDocument();
+
+  // move back in the carousel (first to third)
+  fireEvent.click(leftArrow);
+
+  // expect the last image of array to be shown when left arrow is clicked on the first image
+  expect(
+    queryByAltText("Photo by Pratik Patel on Unsplash")
+  ).not.toBeInTheDocument();
+  expect(queryByAltText("Photo by Josh Post on Unsplash")).toBeInTheDocument();
+});
 
 // snoke test
 it("renders without crashing", () => {
-  render( < Carousel / > );
+  render(<Carousel />);
 });
 
 // snapshot test
